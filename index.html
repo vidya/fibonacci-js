@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Fibonacci Numbers</title>
+
+    <style type="text/css">
+        #root {
+            display: flex;
+            flex-direction: column;
+
+            flex-wrap: wrap;
+            align-items: center;
+
+            padding: 5px;
+            fonts: 1.4em;
+        }
+
+        h5 {
+            margin-top: -10px;
+            margin-bottom: 5px;
+        }
+
+        #numcount-form {
+            flex: 1;
+
+            display: flex;
+            flex-direction: column;
+
+            flex-wrap: wrap;
+            align-items: center;
+
+            margins: 5px;
+            padding: 5px;
+            fonts: 1.2em;
+        }
+
+        #numcount-form  input[type='text'] {
+            flex: 1;
+
+            width: 2em;
+
+            margin-top: 5px;
+            border: 1px solid #000;
+
+            border-radius: 5px;
+            padding: 5px;
+        }
+
+        #numcount-form > #submit-btn {
+            flex: 1;
+
+            width: 8em;
+            background-color: lightgreen;
+
+            border: 1px solid #000;
+            border-radius: 5px;
+
+            margin-top: 8px;
+        }
+
+        #numcount-form  label {
+            padding-right: 4px;
+            margin-top: 2px;
+
+            font-size: 1.2em;
+        }
+
+        #num-table {
+            flex: 1;
+
+            display: flex;
+            justify-content: center;
+        }
+
+        #numlist {
+            display: flex;
+            flex-direction: row;
+
+            flex-wrap: wrap;
+            justify-self: center;
+            justify-content: flex-start;
+
+            width: 70%;
+
+            border: 1px solid #000;
+
+            padding: 5px;
+        }
+
+        .num {
+            flex: 1;
+
+            background: lightgoldenrodyellow;
+
+            margin: 2px;
+            border: 1px solid blue;
+            border-radius: 5px;
+
+            padding: 3px;
+
+            text-align: center;
+        }
+
+        .num:nth-child(3n) {
+            background: lightcyan;
+        }
+
+        li:hover {
+            border-style: dashed;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div id="root">
+    </div>
+
+    <script>
+        //...........................................................................
+        let fibNum = [1, 1, 2, 3, 5]
+
+        function calcFibNum(n) {
+            if (!(n < fibNum.length)) {
+                fibNum[n] = calcFibNum(n - 2) + calcFibNum(n - 1)
+            }
+
+            return fibNum[n]
+        }
+        //...........................................................................
+
+        //...........................................................................
+        const FibNumTable = function(container) {
+            const tableDiv = new Div(container, 'num-table')
+
+            const numList = document.createElement('ul')
+
+            numList.setAttribute('style', 'list-style-type:none;')
+            numList.setAttribute('id', 'numlist')
+
+            tableDiv.div.appendChild(numList)
+
+            for (let num in fibNum) {
+                const item = document.createElement('li')
+
+                item.setAttribute('class', 'num')
+                item.innerHTML = `${fibNum[num]}`
+
+                numList.appendChild(item)
+            }
+
+            this.tableDiv = tableDiv
+        }
+        //...........................................................................
+
+        //...........................................................................
+        const Form = function(container) {
+            const newForm = document.createElement("form")
+            newForm.setAttribute('id', 'numcount-form')
+
+            const inputBoxDiv = new Div(newForm, 'input-box-div')
+
+            const inputBox = document.createElement('input')
+            inputBox.setAttribute('id', 'numcount-entry')
+            inputBox.setAttribute('type', 'text')
+            inputBox.setAttribute('size', '4')
+
+            const label = document.createElement("LABEL");
+            label.setAttribute("for", "numcount-entry");
+
+            const t = document.createTextNode("n");
+            label.appendChild(t);
+
+            inputBoxDiv.div.appendChild(label)
+            inputBoxDiv.div.appendChild(inputBox)
+
+            this.form = newForm
+        }
+
+        Form.prototype.clickHandler = function(event) {
+            const inputText = document.getElementById('numcount-entry').value
+            console.log(`inputText: ${inputText}`)
+
+            let inputNum = parseInt(inputText)
+            if (inputNum === NaN) {
+                alert(`ERROR: inputText = ${inputText} is not a number`)
+            }
+
+            if (inputNum < fibNum.length) {
+                if (inputNum < 5) {
+                    inputNum = 5
+                }
+
+                fibNum = fibNum.slice(0, inputNum)
+            }
+            else {
+                calcFibNum(inputNum)
+            }
+
+            const tabDiv = document.getElementById('num-table')
+            const fnList = tabDiv.children[0]
+            fnList.innerHTML = ''
+
+            const listItem = (num) => {
+                const item = document.createElement('li')
+                item.setAttribute('class', 'num')
+                item.innerHTML = `${fibNum[num]}`
+
+                return item
+            }
+
+            fibNum.map((map, n) => listItem(n)).forEach(li => fnList.appendChild(li))
+        }
+
+        Form.prototype.addSubmitButton = () => {
+            const submitBtn = document.createElement('input')
+
+            submitBtn.setAttribute('type', 'button')
+            submitBtn.setAttribute('value', 'Compute')
+            submitBtn.setAttribute('id', 'submit-btn')
+
+            return submitBtn
+        }
+        //...........................................................................
+
+        //...........................................................................
+        const Div = function(container, divId) {
+            const newDiv = document.createElement("div")
+            newDiv.setAttribute('id', divId)
+
+            container.appendChild(newDiv)
+            this.div = newDiv
+        }
+        //...........................................................................
+
+        //...........................................................................
+        const Webpage = function(props) {
+            this.root = document.getElementById('root')
+            this.props = props
+        }
+
+        Webpage.prototype.addContent = function() {
+            const header = document.createElement('h1')
+            header.innerHTML = this.props.title
+            this.root.appendChild(header)
+
+            const readme = document.createElement('h5')
+            readme.innerHTML = `
+                Compute the first n Fibonacci numbers.
+                Please choose an n greater than 5.
+            `
+
+            this.root.appendChild(readme)
+
+            const inputForm = new Form(this.root)
+            this.root.appendChild(inputForm.form)
+
+            const submitBtn = inputForm.addSubmitButton()
+            submitBtn.onclick = inputForm.clickHandler
+            inputForm.form.appendChild(submitBtn)
+
+            // add fibNum table
+            const fnTable = new FibNumTable(this.root)
+            this.root.appendChild(fnTable.tableDiv.div)
+        }
+        //...........................................................................
+
+        // main()
+        wp = new Webpage({
+            title: 'Fibonacci Numbers'
+        })
+
+        wp.addContent()
+    </script>
+</body>
+
+</html>
+
