@@ -22,7 +22,7 @@
             margin-bottom: 5px;
         }
 
-        #numcount-form {
+        #numCountForm {
             flex: 1;
 
             display: flex;
@@ -36,7 +36,7 @@
             fonts: 1.2em;
         }
 
-        #numcount-form  input[type='text'] {
+        #numCountForm  input[type='text'] {
             flex: 1;
 
             width: 2em;
@@ -48,7 +48,7 @@
             padding: 5px;
         }
 
-        #numcount-form > #submit-btn {
+        #numCountForm > #submitBtn {
             flex: 1;
 
             width: 8em;
@@ -60,21 +60,21 @@
             margin-top: 8px;
         }
 
-        #numcount-form  label {
+        #numCountForm  label {
             padding-right: 4px;
             margin-top: 2px;
 
             font-size: 1.2em;
         }
 
-        #num-table {
+        #numTable {
             flex: 1;
 
             display: flex;
             justify-content: center;
         }
 
-        #numlist {
+        #numList {
             display: flex;
             flex-direction: row;
 
@@ -133,23 +133,25 @@
 
         //...........................................................................
         const FibNumTable = function(container) {
-            const tableDiv = new Div(container, 'num-table')
+            const tableDiv = new Div(container, 'numTable')
 
             const numList = document.createElement('ul')
 
             numList.setAttribute('style', 'list-style-type:none;')
-            numList.setAttribute('id', 'numlist')
+            numList.setAttribute('id', 'numList')
 
             tableDiv.div.appendChild(numList)
 
-            for (let num in fibNum) {
+            const itemList = fibNum.map((fn, num) => {
                 const item = document.createElement('li')
 
                 item.setAttribute('class', 'num')
                 item.innerHTML = `${fibNum[num]}`
 
-                numList.appendChild(item)
-            }
+                return item
+            })
+
+            itemList.forEach(itm => numList.appendChild(itm))
 
             this.tableDiv = tableDiv
         }
@@ -158,17 +160,17 @@
         //...........................................................................
         const Form = function(container) {
             const newForm = document.createElement("form")
-            newForm.setAttribute('id', 'numcount-form')
+            newForm.setAttribute('id', 'numCountForm')
 
-            const inputBoxDiv = new Div(newForm, 'input-box-div')
+            const inputBoxDiv = new Div(newForm, 'inputBoxDiv')
 
             const inputBox = document.createElement('input')
-            inputBox.setAttribute('id', 'numcount-entry')
+            inputBox.setAttribute('id', 'numcountEntry')
             inputBox.setAttribute('type', 'text')
             inputBox.setAttribute('size', '4')
 
             const label = document.createElement("LABEL");
-            label.setAttribute("for", "numcount-entry");
+            label.setAttribute("for", "numcountEntry");
 
             const t = document.createTextNode("n");
             label.appendChild(t);
@@ -180,7 +182,7 @@
         }
 
         Form.prototype.clickHandler = function(event) {
-            const inputText = document.getElementById('numcount-entry').value
+            const inputText = document.getElementById('numcountEntry').value
             console.log(`inputText: ${inputText}`)
 
             let inputNum = parseInt(inputText)
@@ -199,7 +201,7 @@
                 calcFibNum(inputNum)
             }
 
-            const tabDiv = document.getElementById('num-table')
+            const tabDiv = document.getElementById('numTable')
             const fnList = tabDiv.children[0]
             fnList.innerHTML = ''
 
@@ -219,7 +221,7 @@
 
             submitBtn.setAttribute('type', 'button')
             submitBtn.setAttribute('value', 'Compute')
-            submitBtn.setAttribute('id', 'submit-btn')
+            submitBtn.setAttribute('id', 'submitBtn')
 
             return submitBtn
         }
