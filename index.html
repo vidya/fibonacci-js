@@ -6,6 +6,7 @@
     <title>Fibonacci Numbers</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
     <style type="text/css">
 
         #root {
@@ -198,13 +199,10 @@
         }
 
         Form.prototype.clickHandler = function(event) {
-            (() =>{
-               const btnElt = document.getElementById('submitBtn')
-               // btnElt.className += ' clicked'
-
-
-                btnElt.setAttribute("disabled", "disabled");
-                btnElt.setAttribute("disabled", "disabled");
+            (() => {
+                document.getElementById('submitBtn')
+                    .setAttribute("disabled", "disabled")
+                $('#submitBtn').addClass('clicked')
             })()
 
             const inputText = document.getElementById('numCountEntry').value
@@ -242,9 +240,10 @@
 
             (() => {
                 const btnElt = document.getElementById('submitBtn')
-                // btnElt.className = ' inactive '
                 window.setTimeout(() => {
                     btnElt.removeAttribute("disabled");
+                    $('#submitBtn').removeClass('clicked')
+
                 }, 1000)
 
             })()
@@ -315,11 +314,21 @@
         //...........................................................................
 
         // main()
-        wp = new Webpage({
-            title: 'Fibonacci Numbers'
-        })
+        $(document).ready(() => {
+            // $('#root').fadeIn('slow');
+            // alert('Doc is ready')
+            wp = new Webpage({
+                title: 'Fibonacci Numbers'
+            })
 
-        wp.addContent()
+            wp.addContent()
+        });
+
+        // wp = new Webpage({
+        //     title: 'Fibonacci Numbers'
+        // })
+        //
+        // wp.addContent()
     </script>
 </body>
 
