@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <title>Fibonacci Numbers</title>
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <style type="text/css">
+
         #root {
             display: flex;
             flex-direction: column;
@@ -51,11 +53,11 @@
         #numCountForm > #submitBtn {
             flex: 1;
 
-            width: 8em;
-            background-color: lightgreen;
+            /*width: 8em;*/
+            /*background-color: lightgreen;*/
 
-            border: 1px solid #000;
-            border-radius: 5px;
+            /*border: 1px solid #000;*/
+            /*border-radius: 5px;*/
 
             margin-top: 8px;
         }
@@ -109,6 +111,20 @@
 
         li:hover {
             border-style: dashed;
+        }
+
+        .inactive {
+            font-style: normal;
+        }
+
+        .clicked {
+            /*background-color: orange;*/
+            /*font-style: italic;*/
+            background-color: lightpink;
+            -webkit-transition: all 1s ease;
+            -moz-transition: all 1s ease;
+            -o-transition: all 1s ease;
+            transition: all 1s ease;
         }
 
     </style>
@@ -165,12 +181,12 @@
             const inputBoxDiv = new Div(newForm, 'inputBoxDiv')
 
             const inputBox = document.createElement('input')
-            inputBox.setAttribute('id', 'numcountEntry')
+            inputBox.setAttribute('id', 'numCountEntry')
             inputBox.setAttribute('type', 'text')
             inputBox.setAttribute('size', '4')
 
             const label = document.createElement("LABEL");
-            label.setAttribute("for", "numcountEntry");
+            label.setAttribute("for", "numCountEntry");
 
             const t = document.createTextNode("n");
             label.appendChild(t);
@@ -182,7 +198,16 @@
         }
 
         Form.prototype.clickHandler = function(event) {
-            const inputText = document.getElementById('numcountEntry').value
+            (() =>{
+               const btnElt = document.getElementById('submitBtn')
+               // btnElt.className += ' clicked'
+
+
+                btnElt.setAttribute("disabled", "disabled");
+                btnElt.setAttribute("disabled", "disabled");
+            })()
+
+            const inputText = document.getElementById('numCountEntry').value
             console.log(`inputText: ${inputText}`)
 
             let inputNum = parseInt(inputText)
@@ -213,15 +238,35 @@
                 return item
             }
 
-            fibNum.map((map, n) => listItem(n)).forEach(li => fnList.appendChild(li))
+            fibNum.map((map, n) => listItem(n)).forEach(li => fnList.appendChild(li));
+
+            (() => {
+                const btnElt = document.getElementById('submitBtn')
+                // btnElt.className = ' inactive '
+                window.setTimeout(() => {
+                    btnElt.removeAttribute("disabled");
+                }, 1000)
+
+            })()
         }
 
         Form.prototype.addSubmitButton = () => {
-            const submitBtn = document.createElement('input')
+            // const submitBtn = document.createElement('button')
+            //
+            // // submitBtn.setAttribute('type', 'button')
+            // // submitBtn.setAttribute('value', 'Compute')
+            // submitBtn.setAttribute('id', 'submitBtn')
+            // submitBtn.innerHTML = 'Compute'
+            // return submitBtn
+            // const submitBtn = document.createElement('input')
+            const submitBtn = document.createElement('button')
 
             submitBtn.setAttribute('type', 'button')
-            submitBtn.setAttribute('value', 'Compute')
+            // submitBtn.setAttribute('value', 'Compute')
+            submitBtn.innerHTML = 'Compute'
             submitBtn.setAttribute('id', 'submitBtn')
+
+            submitBtn.className = "btn btn-primary"
 
             return submitBtn
         }
