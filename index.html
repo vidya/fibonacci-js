@@ -20,6 +20,10 @@
             fonts: 1.4em;
         }
 
+        h1 {
+            text-align: center;
+        }
+
         header {
             margin-top: 10px;
             margin-bottom: 5px;
@@ -232,7 +236,7 @@
 
         Form.prototype.clickHandler = function(event) {
             (() => {
-                document.getElementById('submitBtn')
+                document.querySelector('#submitBtn')
                     .setAttribute("disabled", "disabled")
 
                 $('#submitBtn').addClass('clicked')
@@ -312,10 +316,11 @@
         }
 
         Webpage.prototype.addContent = function() {
-            const header = document.createElement('header')
-            // const header = document.createElement('h1')
+            const article = document.createElement('article')
+            const header = document.createElement('h1')
             header.innerHTML = this.props.title
-            this.root.appendChild(header)
+            // this.root.appendChild(header)
+            article.appendChild(header)
 
             // const readme = document.createElement('h5')
             const readme = document.createElement('section')
@@ -324,7 +329,8 @@
                 Please choose n to be greater than 5.
             `
 
-            this.root.appendChild(readme)
+            article.appendChild(readme)
+            this.root.appendChild(article)
 
             const inputForm = new Form(this.root)
             this.root.appendChild(inputForm.form)
