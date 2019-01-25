@@ -20,9 +20,11 @@
             fonts: 1.4em;
         }
 
-        h5 {
-            margin-top: -10px;
+        header {
+            margin-top: 10px;
             margin-bottom: 5px;
+
+            font-size: 2em;
         }
 
         #numCountForm {
@@ -75,7 +77,9 @@
 
             display: flex;
             justify-content: center;
-        }
+
+            border: 1px solid #000;
+            box-shadow: 1px 1px 1px 1px #999        }
 
         #numList {
             display: flex;
@@ -83,13 +87,16 @@
 
             flex-wrap: wrap;
             justify-self: center;
-            justify-content: flex-start;
+            justify-content: center;
 
-            width: 70%;
+            width: 96%;
 
-            border: 1px solid #000;
+            /*border: 1px solid #000;*/
 
-            padding: 5px;
+            padding: 10px;
+
+            /*transition: all .5s linear 0;*/
+            /*color: hsl(36,50%,50%);*/
         }
 
         .num {
@@ -119,13 +126,14 @@
         }
 
         .clicked {
-            /*background-color: orange;*/
-            /*font-style: italic;*/
             background-color: lightpink;
-            -webkit-transition: all 1s ease;
-            -moz-transition: all 1s ease;
-            -o-transition: all 1s ease;
-            transition: all 1s ease;
+            /*transition: all .5s linear 0;*/
+            /*color: hsl(36,50%,50%);*/
+
+            /*-webkit-transition: all 1s ease;*/
+            /*-moz-transition: all 1s ease;*/
+            /*-o-transition: all 1s ease;*/
+            /*transition: all 1s ease;*/
         }
 
     </style>
@@ -173,18 +181,37 @@
             this.tableDiv = tableDiv
         }
         //...........................................................................
+        /***
+        <form class="form-inline">
+            <div class="form-group">
+            <label for="exampleInputName2">Name</label>
+            <input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe">
+            </div>
+            <div class="form-group">
+            <label for="exampleInputEmail2">Email</label>
+            <input type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com">
+            </div>
+            <button type="submit" class="btn btn-default">Send invitation</button>
+        </form>
+         ***/
 
         //...........................................................................
         const Form = function(container) {
-            const newForm = document.createElement("form")
-            newForm.setAttribute('id', 'numCountForm')
+            const numCountForm = document.createElement("form")
+            numCountForm.setAttribute('id', 'numCountForm')
+            // numCountForm.className = 'form-inline'
 
-            const inputBoxDiv = new Div(newForm, 'inputBoxDiv')
+            const inputBoxDiv = new Div(numCountForm, 'inputBoxDiv')
 
             const inputBox = document.createElement('input')
             inputBox.setAttribute('id', 'numCountEntry')
             inputBox.setAttribute('type', 'text')
             inputBox.setAttribute('size', '4')
+            // inputBox.className = 'form-control'
+
+            // inputBox.addEventListener('focus', () => {
+            //     alert('FOCUS IN')
+            // } );
 
             const label = document.createElement("LABEL");
             label.setAttribute("for", "numCountEntry");
@@ -195,13 +222,14 @@
             inputBoxDiv.div.appendChild(label)
             inputBoxDiv.div.appendChild(inputBox)
 
-            this.form = newForm
+            this.form = numCountForm
         }
 
         Form.prototype.clickHandler = function(event) {
             (() => {
                 document.getElementById('submitBtn')
                     .setAttribute("disabled", "disabled")
+
                 $('#submitBtn').addClass('clicked')
             })()
 
@@ -242,26 +270,17 @@
                 const btnElt = document.getElementById('submitBtn')
                 window.setTimeout(() => {
                     btnElt.removeAttribute("disabled");
-                    $('#submitBtn').removeClass('clicked')
 
+                    $('#submitBtn').removeClass('clicked')
                 }, 1000)
 
             })()
         }
 
         Form.prototype.addSubmitButton = () => {
-            // const submitBtn = document.createElement('button')
-            //
-            // // submitBtn.setAttribute('type', 'button')
-            // // submitBtn.setAttribute('value', 'Compute')
-            // submitBtn.setAttribute('id', 'submitBtn')
-            // submitBtn.innerHTML = 'Compute'
-            // return submitBtn
-            // const submitBtn = document.createElement('input')
             const submitBtn = document.createElement('button')
 
             submitBtn.setAttribute('type', 'button')
-            // submitBtn.setAttribute('value', 'Compute')
             submitBtn.innerHTML = 'Compute'
             submitBtn.setAttribute('id', 'submitBtn')
 
@@ -288,11 +307,13 @@
         }
 
         Webpage.prototype.addContent = function() {
-            const header = document.createElement('h1')
+            const header = document.createElement('header')
+            // const header = document.createElement('h1')
             header.innerHTML = this.props.title
             this.root.appendChild(header)
 
-            const readme = document.createElement('h5')
+            // const readme = document.createElement('h5')
+            const readme = document.createElement('section')
             readme.innerHTML = `
                 Compute the first n Fibonacci numbers.
                 Please choose n to be greater than 5.
@@ -315,20 +336,21 @@
 
         // main()
         $(document).ready(() => {
-            // $('#root').fadeIn('slow');
-            // alert('Doc is ready')
             wp = new Webpage({
                 title: 'Fibonacci Numbers'
             })
 
+            // $("#numCountEntry").focus(function() {
+            //     alert( "Handler for .focus() called." );
+            // });
+
+            // const inputBox = document.getElementById('numCountEntry')
+            // inputBox.addEventListener('focus', () => {
+            //     alert('FOCUS IN')
+            // } );
+
             wp.addContent()
         });
-
-        // wp = new Webpage({
-        //     title: 'Fibonacci Numbers'
-        // })
-        //
-        // wp.addContent()
     </script>
 </body>
 
