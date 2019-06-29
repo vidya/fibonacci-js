@@ -178,106 +178,6 @@
         //...........................................................................
 
         //...........................................................................
-        const Form = function(container) {
-            const numCountForm = document.createElement("form")
-            numCountForm.setAttribute('id', 'numCountForm')
-
-            const inputBoxDiv = new Div(numCountForm, 'inputBoxDiv')
-
-            const inputBox = document.createElement('input')
-            inputBox.setAttribute('id', 'numCountEntry')
-            inputBox.setAttribute('type', 'text')
-            inputBox.setAttribute('size', '4')
- 
-            const label = document.createElement("LABEL");
-            label.setAttribute("for", "numCountEntry");
-
-            const t = document.createTextNode("n");
-            label.appendChild(t);
-
-            inputBoxDiv.div.appendChild(label)
-            inputBoxDiv.div.appendChild(inputBox)
-
-            this.form = numCountForm
-        }
-
-        Form.prototype.clickHandler = function(event) {
-            (() => {
-                document.querySelector('#displayFibNums')
-                    .setAttribute("disabled", "disabled")
-
-                $('#displayFibNums').addClass('clicked')
-
-                // document.querySelector('#submitBtn')
-                //     .setAttribute("disabled", "disabled")
-
-                // $('#submitBtn').addClass('clicked')
-
-                
-            })()
-
-            const inputText = document.getElementById('fibNumCount').value
-            console.log(`inputText: ${inputText}`)
-            // const inputText = document.getElementById('numCountEntry').value
-            // console.log(`inputText: ${inputText}`)
-
-            let inputNum = parseInt(inputText)
-            if (inputNum === NaN) {
-                alert(`ERROR: inputText = ${inputText} is not a number`)
-            }
-            console.log(`inputNum: ${inputNum}`)
-
-            if (inputNum < fibNum.length) {
-                if (inputNum < 5) {
-                    inputNum = 5
-                }
-
-                fibNum = fibNum.slice(0, inputNum)
-            }
-            else {
-                calcFibNum(inputNum)
-            }
-
-            const tabDiv = document.getElementById('numTable')
-            const fnList = tabDiv.children[0]
-            fnList.innerHTML = ''
-
-            const listItem = (num) => {
-                const item = document.createElement('li')
-                item.setAttribute('class', 'num')
-                item.innerHTML = `${fibNum[num]}`
-
-                return item
-            }
-
-            fibNum.map((map, n) => listItem(n)).forEach(li => fnList.appendChild(li));
-
-            (() => {
-                // const btnElt = document.getElementById('submitBtn')
-                const btnElt = document.getElementById('displayFibNums')
-                window.setTimeout(() => {
-                    btnElt.removeAttribute("disabled");
-
-                    $('#submitBtn').removeClass('clicked')
-                }, 1000)
-
-            })()
-        }
-
-        Form.prototype.addSubmitButton = () => {
-            const submitBtn = document.createElement('button')
-
-            submitBtn.setAttribute('type', 'button')
-            submitBtn.innerHTML = 'Compute'
-            submitBtn.setAttribute('id', 'submitBtn')
-
-            submitBtn.className = "btn btn-primary"
-
-            return submitBtn
-        }
-        //...........................................................................
-
-        //...........................................................................
         const Div = function(container, divId) {
             const newDiv = document.createElement("div")
             newDiv.setAttribute('id', divId)
@@ -299,25 +199,15 @@
             header.innerHTML = this.props.title
             article.appendChild(header)
 
-            // numCountForm
-
             const readme = document.createElement('section')
             readme.innerHTML = `
                 Compute the first n Fibonacci numbers.
                 Please choose n to be greater than 5.
-                <br/>
-                
+                <br/>           
             `
 
             article.appendChild(readme)
             this.root.appendChild(article)
-
-            // let inputForm = new Form(this.root)
-            // this.root.appendChild(inputForm.form)
-
-            // const submitBtn = inputForm.addSubmitButton()
-            // submitBtn.onclick = inputForm.clickHandler
-            // inputForm.form.appendChild(submitBtn)
 
             //.........
             const inputForm = document.getElementById('numCountForm')
@@ -337,20 +227,11 @@
                     .setAttribute("disabled", "disabled")
 
                 $('#displayFibNums').addClass('clicked')
-
-                // document.querySelector('#submitBtn')
-                //     .setAttribute("disabled", "disabled")
-
-                // $('#submitBtn').addClass('clicked')
-
-                
             })()
 
             const inputText = document.getElementById('fibNumCount').value
             console.log(`inputText: ${inputText}`)
-            // const inputText = document.getElementById('numCountEntry').value
-            // console.log(`inputText: ${inputText}`)
-
+ 
             let inputNum = parseInt(inputText)
             if (inputNum === NaN) {
                 alert(`ERROR: inputText = ${inputText} is not a number`)
@@ -383,7 +264,6 @@
             fibNum.map((map, n) => listItem(n)).forEach(li => fnList.appendChild(li));
 
             (() => {
-                // const btnElt = document.getElementById('submitBtn')
                 const btnElt = document.getElementById('displayFibNums')
                 window.setTimeout(() => {
                     btnElt.removeAttribute("disabled");
@@ -394,7 +274,6 @@
             })()
         }
 
-
         // main()
         $(document).ready(() => {
             wp = new Webpage({
@@ -402,8 +281,8 @@
             })
 
             wp.addContent()
-            const newForm = document.getElementById('numCountForm')
-            newForm.onclick = newClickHandler
+            
+            $( "#displayFibNums").on( "click", newClickHandler);
         });
     </script>
 
