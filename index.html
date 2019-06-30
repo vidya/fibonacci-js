@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
     <style type="text/css">
-
         #root {
             display: flex;
             flex-direction: column;
@@ -116,11 +115,6 @@
         .inactive {
             font-style: normal;
         }
-
-        .clicked {
-            background-color: lightpink;
-        }
-
     </style>
 </head>
 
@@ -154,13 +148,9 @@
     }
  
     clickHandler = (event) => {
-        $('#displayFibNums')
-                .attr("disabled", "disabled")
-                .addClass('clicked')
+        $('#displayFibNums').attr("disabled", "disabled")
 
-        const inputText = $('#fibNumCount').val()
-
-        let inputNum = parseInt(inputText)
+        let inputNum = parseInt($('#fibNumCount').val())
         if (inputNum === NaN) {
             alert(`ERROR: inputText = ${inputText} is not a number`)
         }
@@ -199,20 +189,18 @@
             $('#displayFibNums').removeAttr("disabled", );
 
             $('#submitBtn').removeClass('clicked')
-        }, 1000)
+        }, 200)
     }
 
     $(document).ready(() => {
        // add div for Fibonacci numbers
         const tableDiv = document.getElementById('numTable')
+        
         const numList = document.createElement('ul')
-
         numList.setAttribute('style', 'list-style-type:none;')
         numList.setAttribute('id', 'numList')
 
         tableDiv.appendChild(numList)
-
-        fibNum = [1, 1, 2, 3, 5]
 
         items = fibNum.map(fn => $('li').attr('class', 'num').html(`${fn}`))
         items.forEach(item =>  $('#numTable ul').add(item))
