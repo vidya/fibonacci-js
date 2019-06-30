@@ -36,11 +36,6 @@
             border: 1px solid blue;
         }
 
-        /* #inputForm {
-            flex: 1;
-            display:flex;
-        } */
-
         #numCountForm {
             flex: 1;
 
@@ -69,10 +64,14 @@
             margin-top: 8px;
         }
 
-        #numCountForm #fibNumCount {
+        /* #numCountForm  */
+        #fibNumCount {
                 min-width: 130px;
         }
 
+        #displayFibNums {
+            margin-top: 10px;
+        }
         #numCountForm  label {
             padding-right: 4px;
             margin-top: 2px;
@@ -143,11 +142,9 @@
             <fieldset>
                     <legend>Fibonacci Numbers</legend>
                     <form id="numCountForm">
-                            <div class="form-group" id="inputForm">
-                              <input type="text" class="form-control" id="fibNumCount" aria-describedby="emailHelp" placeholder="Enter count > 5">
-                            </div>
-        
-                              <button type="submit" class="btn btn-primary" id="displayFibNums">Display</button>
+                        <input type="text" class="form-control" id="fibNumCount" 
+                            aria-describedby="emailHelp" placeholder="Enter count > 5">
+                        <button type="submit" class="btn btn-primary" id="displayFibNums">Display</button>
                     </form>
             </fieldset>
             <div id='numTable'>
