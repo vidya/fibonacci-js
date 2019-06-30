@@ -19,21 +19,10 @@
             padding: 5px;
         }
 
-        h1 {
-            text-align: center;
-        }
-
-        header {
-            margin-top: 10px;
-            margin-bottom: 5px;
-
-            font-size: 2em;
-        }
-
         div#root fieldset {
             margin: 10px;
             padding: 8px;
-            border: 1px solid blue;
+            border: 1px solid black;
         }
 
         #numCountForm {
@@ -58,12 +47,6 @@
             padding: 5px;
         }
 
-        #numCountForm > #submitBtn {
-            flex: 1;
-
-            margin-top: 8px;
-        }
-
         #fibNumCount {
                 min-width: 130px;
         }
@@ -72,18 +55,13 @@
             margin-top: 10px;
         }
     
-        /* #fsOne {
-            flex: 1;
-            display: flex;
-
-            flex-direction: row;
-        }
-         */
         #numTableHeading {
             flex:1;
 
             margin-top: 30px;
             margin-bottom: -6px;
+
+            font-size: 1.4em;
         }
 
         #numTable {
@@ -147,6 +125,8 @@
 </head>
 
 <body>
+    <title> Fibonacci Numbers</title>
+    
     <div id="root">
             <fieldset>
                 <legend>Fibonacci numbers</legend>
@@ -158,14 +138,13 @@
             </fieldset>
 
             <h6 id=numTableHeading>First 5 Fibonacci numbers</h6>
-            <div id='numTable'>
 
+            <div id='numTable'>
             </div>
     </div>
 </body>
 
 <script>
-    //...........................................................................
     let fibNum = [1, 1, 2, 3, 5]
 
     function calcFibNum(n) {
@@ -175,9 +154,7 @@
 
         return fibNum[n]
     }
-    //...........................................................................
-
-    //...........................................................................
+ 
     const FibNumTable = function(container) {
         const tableDiv = document.getElementById('numTable')
         const numList = document.createElement('ul')
@@ -198,39 +175,18 @@
 
         this.tableDiv = tableDiv
     }
-    //...........................................................................
-
-    //...........................................................................
-    const Webpage = function(props) {
-        this.root = document.getElementById('root')
-        this.props = props
-    }
-
-    Webpage.prototype.addContent = function() {
-        $( "#displayFibNums").on( "click", newClickHandler);
-
-        // add fibNum table
-        const fnTable = new FibNumTable(this.root)
-        this.root.appendChild(fnTable.tableDiv)
-    }
-    //...........................................................................
-
-    newClickHandler = function(event) {
-        (() => {
-            document.querySelector('#displayFibNums')
-                .setAttribute("disabled", "disabled")
-
-            $('#displayFibNums').addClass('clicked')
-        })()
+ 
+    clickHandler = function(event) {
+        $('#displayFibNums')
+                .attr("disabled", "disabled")
+                .addClass('clicked')
 
         const inputText = document.getElementById('fibNumCount').value
-        console.log(`inputText: ${inputText}`)
 
         let inputNum = parseInt(inputText)
         if (inputNum === NaN) {
             alert(`ERROR: inputText = ${inputText} is not a number`)
         }
-        console.log(`inputNum: ${inputNum}`)
 
         if (inputNum < fibNum.length) {
             if (inputNum < 5) {
@@ -254,30 +210,24 @@
             item.setAttribute('class', 'num')
             item.innerHTML = `${fibNum[num]}`
 
-            // const item =  $('li').attr('class', 'num').html(`${fibNum[num]}`)
             return item           
         }
 
         fibNum.map((map, n) => listItem(n)).forEach(li => fnList.appendChild(li));
 
-        (() => {
-            const btnElt = document.getElementById('displayFibNums')
-            window.setTimeout(() => {
-                btnElt.removeAttribute("disabled");
+        window.setTimeout(() => {
+            $('#displayFibNums').removeAttr("disabled", );
 
-                $('#submitBtn').removeClass('clicked')
-            }, 1000)
-
-        })()
+            $('#submitBtn').removeClass('clicked')
+        }, 1000)
     }
 
-    // main()
     $(document).ready(() => {
-        wp = new Webpage({
-            title: 'Fibonacci Numbers'
-        })
+        $( "#displayFibNums").on( "click", clickHandler);
 
-        wp.addContent()            
+        // add fibNum table
+        const fnTable = new FibNumTable(this.root)
+        this.root.appendChild(fnTable.tableDiv)    
     });
 </script>
 
