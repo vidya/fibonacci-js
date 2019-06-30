@@ -35,6 +35,12 @@
             padding: 8px;
             border: 1px solid blue;
         }
+
+        /* #inputForm {
+            flex: 1;
+            display:flex;
+        } */
+
         #numCountForm {
             flex: 1;
 
@@ -64,7 +70,7 @@
         }
 
         #numCountForm #fibNumCount {
-                min-width: 120px;
+                min-width: 130px;
         }
 
         #numCountForm  label {
@@ -137,14 +143,11 @@
             <fieldset>
                     <legend>Fibonacci Numbers</legend>
                     <form id="numCountForm">
-                            <div class="form-group">
-                              <label for="fibNumCount">Count</label>
-                              <input type="text" class="form-control" id="fibNumCount" aria-describedby="emailHelp" placeholder="Enter value > 5">
+                            <div class="form-group" id="inputForm">
+                              <input type="text" class="form-control" id="fibNumCount" aria-describedby="emailHelp" placeholder="Enter count > 5">
                             </div>
         
-                            <div class="form-check">
                               <button type="submit" class="btn btn-primary" id="displayFibNums">Display</button>
-                            </div>                          
                     </form>
             </fieldset>
             <div id='numTable'>
@@ -240,7 +243,8 @@
             item.setAttribute('class', 'num')
             item.innerHTML = `${fibNum[num]}`
 
-            return item
+            // const item =  $('li').attr('class', 'num').html(`${fibNum[num]}`)
+            return item           
         }
 
         fibNum.map((map, n) => listItem(n)).forEach(li => fnList.appendChild(li));
