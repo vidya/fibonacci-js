@@ -33,7 +33,6 @@
         div#root fieldset {
             margin: 10px;
             padding: 8px;
-            /* min-width: 200px; */
             border: 1px solid blue;
         }
         #numCountForm {
@@ -145,137 +144,127 @@
         
                             <div class="form-check">
                               <button type="submit" class="btn btn-primary" id="displayFibNums">Display</button>
-                            </div>
-                            
+                            </div>                          
                     </form>
             </fieldset>
+            <div id='numTable'>
+            </div>
     </div>
 </body>
 
-    <script>
-        //...........................................................................
-        let fibNum = [1, 1, 2, 3, 5]
+<script>
+    //...........................................................................
+    let fibNum = [1, 1, 2, 3, 5]
 
-        function calcFibNum(n) {
-            if (n >= fibNum.length) {
-                fibNum[n] = calcFibNum(n - 2) + calcFibNum(n - 1)
-            }
-
-            return fibNum[n]
-        }
-        //...........................................................................
-
-        //...........................................................................
-        const FibNumTable = function(container) {
-            const tableDiv = new Div(container, 'numTable')
-
-            const numList = document.createElement('ul')
-
-            numList.setAttribute('style', 'list-style-type:none;')
-            numList.setAttribute('id', 'numList')
-
-            tableDiv.div.appendChild(numList)
-
-            for (const fn of fibNum) {
-                const item = document.createElement('li')
-
-                item.setAttribute('class', 'num')
-                item.innerHTML = `${fn}`
-
-                numList.appendChild(item)
-            }
-
-            this.tableDiv = tableDiv
-        }
-        //...........................................................................
-
-        //...........................................................................
-        const Div = function(container, divId) {
-            const newDiv = document.createElement("div")
-            newDiv.setAttribute('id', divId)
-
-            container.appendChild(newDiv)
-            this.div = newDiv
-        }
-        //...........................................................................
-
-        //...........................................................................
-        const Webpage = function(props) {
-            this.root = document.getElementById('root')
-            this.props = props
+    function calcFibNum(n) {
+        if (n >= fibNum.length) {
+            fibNum[n] = calcFibNum(n - 2) + calcFibNum(n - 1)
         }
 
-        Webpage.prototype.addContent = function() {
-            $( "#displayFibNums").on( "click", newClickHandler);
+        return fibNum[n]
+    }
+    //...........................................................................
 
-            // add fibNum table
-            const fnTable = new FibNumTable(this.root)
-            this.root.appendChild(fnTable.tableDiv.div)
-        }
-        //...........................................................................
+    //...........................................................................
+    const FibNumTable = function(container) {
+        const tableDiv = document.getElementById('numTable')
+        const numList = document.createElement('ul')
 
-        newClickHandler = function(event) {
-            (() => {
-                document.querySelector('#displayFibNums')
-                    .setAttribute("disabled", "disabled")
+        numList.setAttribute('style', 'list-style-type:none;')
+        numList.setAttribute('id', 'numList')
 
-                $('#displayFibNums').addClass('clicked')
-            })()
+        tableDiv.appendChild(numList)
 
-            const inputText = document.getElementById('fibNumCount').value
-            console.log(`inputText: ${inputText}`)
- 
-            let inputNum = parseInt(inputText)
-            if (inputNum === NaN) {
-                alert(`ERROR: inputText = ${inputText} is not a number`)
-            }
-            console.log(`inputNum: ${inputNum}`)
+        for (const fn of fibNum) {
+            const item = document.createElement('li')
 
-            if (inputNum < fibNum.length) {
-                if (inputNum < 5) {
-                    inputNum = 5
-                }
+            item.setAttribute('class', 'num')
+            item.innerHTML = `${fn}`
 
-                fibNum = fibNum.slice(0, inputNum)
-            }
-            else {
-                calcFibNum(inputNum)
-            }
-
-            const tabDiv = document.getElementById('numTable')
-            const fnList = tabDiv.children[0]
-            fnList.innerHTML = ''
-
-            const listItem = (num) => {
-                const item = document.createElement('li')
-                item.setAttribute('class', 'num')
-                item.innerHTML = `${fibNum[num]}`
-
-                return item
-            }
-
-            fibNum.map((map, n) => listItem(n)).forEach(li => fnList.appendChild(li));
-
-            (() => {
-                const btnElt = document.getElementById('displayFibNums')
-                window.setTimeout(() => {
-                    btnElt.removeAttribute("disabled");
-
-                    $('#submitBtn').removeClass('clicked')
-                }, 1000)
-
-            })()
+            numList.appendChild(item)
         }
 
-        // main()
-        $(document).ready(() => {
-            wp = new Webpage({
-                title: 'Fibonacci Numbers'
-            })
+        this.tableDiv = tableDiv
+    }
+    //...........................................................................
 
-            wp.addContent()            
-        });
-    </script>
+    //...........................................................................
+    const Webpage = function(props) {
+        this.root = document.getElementById('root')
+        this.props = props
+    }
+
+    Webpage.prototype.addContent = function() {
+        $( "#displayFibNums").on( "click", newClickHandler);
+
+        // add fibNum table
+        const fnTable = new FibNumTable(this.root)
+        this.root.appendChild(fnTable.tableDiv)
+    }
+    //...........................................................................
+
+    newClickHandler = function(event) {
+        (() => {
+            document.querySelector('#displayFibNums')
+                .setAttribute("disabled", "disabled")
+
+            $('#displayFibNums').addClass('clicked')
+        })()
+
+        const inputText = document.getElementById('fibNumCount').value
+        console.log(`inputText: ${inputText}`)
+
+        let inputNum = parseInt(inputText)
+        if (inputNum === NaN) {
+            alert(`ERROR: inputText = ${inputText} is not a number`)
+        }
+        console.log(`inputNum: ${inputNum}`)
+
+        if (inputNum < fibNum.length) {
+            if (inputNum < 5) {
+                inputNum = 5
+            }
+
+            fibNum = fibNum.slice(0, inputNum)
+        }
+        else {
+            calcFibNum(inputNum)
+        }
+
+        const tabDiv = document.getElementById('numTable')
+        const fnList = tabDiv.children[0]
+        fnList.innerHTML = ''
+
+        const listItem = (num) => {
+            const item = document.createElement('li')
+            item.setAttribute('class', 'num')
+            item.innerHTML = `${fibNum[num]}`
+
+            return item
+        }
+
+        fibNum.map((map, n) => listItem(n)).forEach(li => fnList.appendChild(li));
+
+        (() => {
+            const btnElt = document.getElementById('displayFibNums')
+            window.setTimeout(() => {
+                btnElt.removeAttribute("disabled");
+
+                $('#submitBtn').removeClass('clicked')
+            }, 1000)
+
+        })()
+    }
+
+    // main()
+    $(document).ready(() => {
+        wp = new Webpage({
+            title: 'Fibonacci Numbers'
+        })
+
+        wp.addContent()            
+    });
+</script>
 
 </html>
 
