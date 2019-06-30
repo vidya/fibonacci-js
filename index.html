@@ -64,7 +64,6 @@
             margin-top: 8px;
         }
 
-        /* #numCountForm  */
         #fibNumCount {
                 min-width: 130px;
         }
@@ -72,17 +71,26 @@
         #displayFibNums {
             margin-top: 10px;
         }
-        #numCountForm  label {
-            padding-right: 4px;
-            margin-top: 2px;
+    
+        /* #fsOne {
+            flex: 1;
+            display: flex;
 
-            font-size: 1.2em;
+            flex-direction: row;
+        }
+         */
+        #numTableHeading {
+            flex:1;
+
+            margin-top: 30px;
+            margin-bottom: -6px;
         }
 
         #numTable {
             flex: 1;
 
             display: flex;
+            flex-direction: column;
             justify-content: center;
 
             width: 60%;
@@ -94,6 +102,7 @@
         }
 
         #numList {
+            flex: 1;
             display: flex;
             flex-direction: row;
 
@@ -140,14 +149,17 @@
 <body>
     <div id="root">
             <fieldset>
-                    <legend>Fibonacci Numbers</legend>
-                    <form id="numCountForm">
-                        <input type="text" class="form-control" id="fibNumCount" 
-                            aria-describedby="emailHelp" placeholder="Enter count > 5">
-                        <button type="submit" class="btn btn-primary" id="displayFibNums">Display</button>
-                    </form>
+                <legend>Fibonacci numbers</legend>
+                <form id="numCountForm">
+                    <input type="text" class="form-control" id="fibNumCount" 
+                        aria-describedby="emailHelp" placeholder="Enter count > 5">
+                    <button type="submit" class="btn btn-primary" id="displayFibNums">Display</button>
+                </form>
             </fieldset>
+
+            <h6 id=numTableHeading>First 5 Fibonacci numbers</h6>
             <div id='numTable'>
+
             </div>
     </div>
 </body>
@@ -230,6 +242,8 @@
         else {
             calcFibNum(inputNum)
         }
+
+        $('#numTableHeading').html(`First ${inputNum} Fibonacci numbers`)
 
         const tabDiv = document.getElementById('numTable')
         const fnList = tabDiv.children[0]
