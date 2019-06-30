@@ -125,8 +125,6 @@
 </head>
 
 <body>
-    <title> Fibonacci Numbers</title>
-    
     <div id="root">
             <fieldset>
                 <legend>Fibonacci numbers</legend>
@@ -155,33 +153,12 @@
         return fibNum[n]
     }
  
-    const FibNumTable = function(container) {
-        const tableDiv = document.getElementById('numTable')
-        const numList = document.createElement('ul')
-
-        numList.setAttribute('style', 'list-style-type:none;')
-        numList.setAttribute('id', 'numList')
-
-        tableDiv.appendChild(numList)
-
-        for (const fn of fibNum) {
-            const item = document.createElement('li')
-
-            item.setAttribute('class', 'num')
-            item.innerHTML = `${fn}`
-
-            numList.appendChild(item)
-        }
-
-        this.tableDiv = tableDiv
-    }
- 
-    clickHandler = function(event) {
+    clickHandler = (event) => {
         $('#displayFibNums')
                 .attr("disabled", "disabled")
                 .addClass('clicked')
 
-        const inputText = document.getElementById('fibNumCount').value
+        const inputText = $('#fibNumCount').val()
 
         let inputNum = parseInt(inputText)
         if (inputNum === NaN) {
@@ -201,8 +178,8 @@
 
         $('#numTableHeading').html(`First ${inputNum} Fibonacci numbers`)
 
-        const tabDiv = document.getElementById('numTable')
-        const fnList = tabDiv.children[0]
+        const tableDiv = document.getElementById('numTable')
+        const fnList = tableDiv.children[0]
         fnList.innerHTML = ''
 
         const listItem = (num) => {
@@ -215,6 +192,9 @@
 
         fibNum.map((map, n) => listItem(n)).forEach(li => fnList.appendChild(li));
 
+        $('#numTableHeading').show()
+        $('#numTable').show()
+
         window.setTimeout(() => {
             $('#displayFibNums').removeAttr("disabled", );
 
@@ -223,13 +203,27 @@
     }
 
     $(document).ready(() => {
-        $( "#displayFibNums").on( "click", clickHandler);
+       // add div for Fibonacci numbers
+        const tableDiv = document.getElementById('numTable')
+        const numList = document.createElement('ul')
 
-        // add fibNum table
-        const fnTable = new FibNumTable(this.root)
-        this.root.appendChild(fnTable.tableDiv)    
+        numList.setAttribute('style', 'list-style-type:none;')
+        numList.setAttribute('id', 'numList')
+
+        tableDiv.appendChild(numList)
+
+        fibNum = [1, 1, 2, 3, 5]
+
+        items = fibNum.map(fn => $('li').attr('class', 'num').html(`${fn}`))
+        items.forEach(item =>  $('#numTable ul').add(item))
+
+        $('#root').add(tableDiv)
+
+        $('#numTableHeading').hide()
+        $('#numTable').hide()
+
+        $( "#displayFibNums").on( "click", clickHandler);
     });
 </script>
 
 </html>
-
