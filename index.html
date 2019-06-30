@@ -30,6 +30,12 @@
             font-size: 2em;
         }
 
+        div#root fieldset {
+            margin: 10px;
+            padding: 8px;
+            /* min-width: 200px; */
+            border: 1px solid blue;
+        }
         #numCountForm {
             flex: 1;
 
@@ -56,6 +62,10 @@
             flex: 1;
 
             margin-top: 8px;
+        }
+
+        #numCountForm #fibNumCount {
+                min-width: 120px;
         }
 
         #numCountForm  label {
@@ -125,18 +135,20 @@
 
 <body>
     <div id="root">
-            <form id="numCountForm">
-                    <div class="form-group">
-                      <label for="fibNumCount">Fibonacci number count</label>
-                      <input type="text" class="form-control" id="fibNumCount" aria-describedby="emailHelp" placeholder="Enter value > 5">
-                    </div>
-
-                    <div class="form-check">
-                      <button type="submit" class="btn btn-primary" id="displayFibNums">Display</button>
-                    </div>
-                    
-            </form>
-
+            <fieldset>
+                    <legend>Fibonacci Numbers</legend>
+                    <form id="numCountForm">
+                            <div class="form-group">
+                              <label for="fibNumCount">Count</label>
+                              <input type="text" class="form-control" id="fibNumCount" aria-describedby="emailHelp" placeholder="Enter value > 5">
+                            </div>
+        
+                            <div class="form-check">
+                              <button type="submit" class="btn btn-primary" id="displayFibNums">Display</button>
+                            </div>
+                            
+                    </form>
+            </fieldset>
     </div>
 </body>
 
@@ -194,26 +206,7 @@
         }
 
         Webpage.prototype.addContent = function() {
-            const article = document.createElement('article')
-            const header = document.createElement('h1')
-            header.innerHTML = this.props.title
-            article.appendChild(header)
-
-            const readme = document.createElement('section')
-            readme.innerHTML = `
-                Compute the first n Fibonacci numbers.
-                Please choose n to be greater than 5.
-                <br/>           
-            `
-
-            article.appendChild(readme)
-            this.root.appendChild(article)
-
-            //.........
-            const inputForm = document.getElementById('numCountForm')
-            const displayBtn = document.getElementById('displayFibNums')
-            displayBtn.onclick = inputForm.clickHandler
-            //.........
+            $( "#displayFibNums").on( "click", newClickHandler);
 
             // add fibNum table
             const fnTable = new FibNumTable(this.root)
@@ -277,12 +270,10 @@
         // main()
         $(document).ready(() => {
             wp = new Webpage({
-                title: '56 Fibonacci Numbers'
+                title: 'Fibonacci Numbers'
             })
 
-            wp.addContent()
-            
-            $( "#displayFibNums").on( "click", newClickHandler);
+            wp.addContent()            
         });
     </script>
 
